@@ -15,9 +15,13 @@ struct FeedView: View {
            List(feedViewModel.articles) { article in
                NavigationLink(destination: DetailView(article: article)) {
                    Text(article.title)
+                       .fontWeight(.medium)
                }
            }
            .navigationTitle("Feed")
+       }
+       .onAppear {
+           feedViewModel.fetch()
        }
    }
 }
@@ -27,47 +31,3 @@ struct FeedView: View {
     FeedView()
 }
 
-
-
-/*
- 
- @StateObject
- 
- definition
- 
- -  property wrapper
- -  creates and keeps a single instance of an observable object for view
- 
- Key Point
- 
- -  init object once
- -  prevents it recreated on every UI redraw
- -  works with class @observableObject
- -  use when view creates and owns the object
- 
- Tradeoff
- 
- -  if used incorrectly,creates multiple unwanted instances
-    breaking shared state
- 
- 
- 
- NavigationStack
- 
- definition
-
- -  swiftui container manages navigation using stack based path(push/pop)
- 
- Key Points
- 
- -  Replace Older NavigationView
- -  more control and predictibility
- -  use data driven approach instead links
- 
- Tradeoff
-
- -  a bit complex than old navigation because need to
-    manage state explicitly
- 
- 
- */

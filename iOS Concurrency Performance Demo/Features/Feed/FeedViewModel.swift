@@ -13,36 +13,14 @@ class FeedViewModel : ObservableObject {
         Article(title: "First", description: "First Article Description"),
         Article(title: "Second", description: "Second Article Description")
     ]
+    
+    let api = APIClient()
+    
+    func fetch(){
+        api.fetchArticles { [weak self] articleData in
+            self?.articles = articleData
+        }
+    }
+    
 }
 
-
-
-/*
- 
- ObservableObject
- 
- definition
- 
- - ObservableObject swiftui protocol that enables a class who adopt it tell UI that
- the data changes
- 
- 
- Key points
- 
- - ObservableObject apply to whole class
- - ObservableObject can have without @Published properties manual update
- (use objectWillChange.send(), before change the property)
- - switui listens to changes via an internal publisher objectWillChange
- 
- Tradeoff
- 
- - unnecessary UI updates if too many properties change frequently
- reducing performance
- 
- 
- @Published
- 
- - applies to property level
- - @published meaningless without ObservableObject
- 
- */
