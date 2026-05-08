@@ -20,8 +20,14 @@ struct FeedView: View {
            }
            .navigationTitle("Feed")
        }
-       .onAppear {
-           feedViewModel.fetch()
+       //completion way
+//       .onAppear {
+//           feedViewModel.fetch()
+//       }
+       
+       //modern async/await
+       .task {
+           await feedViewModel.asyncfetch()
        }
    }
 }

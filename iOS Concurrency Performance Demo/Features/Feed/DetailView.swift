@@ -14,6 +14,8 @@ struct DetailView: View {
     
         VStack {
             Text(article.title)
+                .fontWeight(.medium)
+                .padding(.bottom, 10)
             Text(article.description)
         }
     }
