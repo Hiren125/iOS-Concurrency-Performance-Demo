@@ -15,19 +15,14 @@ class FeedViewModel : ObservableObject {
     ]
     
     let api = APIClient()
-    
-    //completion way
-    func fetch(){
-        api.fetchArticles { [weak self] articleData in
-            self?.articles = articleData
-        }
-    }
-    
-    
-    //modern async/await
+
     func asyncfetch() async{
-        articles = await api.asyncFetchArticle()
         
+        let start = Date()
+        let (first,second) = await api.fetchMultiple()
+        
+        articles = first + second
+        print("Time: \(Date().timeIntervalSince(start))")
     }
     
     
