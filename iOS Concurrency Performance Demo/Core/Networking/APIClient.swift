@@ -10,28 +10,6 @@ import Foundation
 
 class APIClient{
     
-    
-    //completion way
-    func fetchArticles(completion: @escaping ([Article]) -> Void) {
-        
-        guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts") else { return }
-        
-        URLSession.shared.dataTask(with: url) { data, _, _ in
-            guard let data = data else { return }
-            
-            let decoded = try? JSONDecoder().decode([PostDTO].self, from: data)
-            
-            let article = decoded?.map{
-                Article(title: $0.title, description: $0.body)
-            } ?? []
-            
-            DispatchQueue.main.async {
-                completion(article)
-            }
-        }.resume()
-    }
-    
-    //modern async/await
     func asyncFetchArticle() async -> [Article]{
         
         guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts") else { return []
@@ -52,6 +30,16 @@ class APIClient{
         }
         
     }
+    
+    
+    func fetchMultiple() async -> ([Article], [Article]) {
+       async let first = asyncFetchArticle()
+       async let second = asyncFetchArticle()
+      
+       return await (first, second)
+    }
+
+    
     
 }
 
